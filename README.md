@@ -5,6 +5,8 @@
 **DO NOT USE AS REFERENCE** because of possible vulnerabilities.
 Soon, Plans to be a bad application.
 
+If you want to check operation details, see [here](./docs/README.md)
+
 ## Setup
 Execute the following commands one at a time.
 
