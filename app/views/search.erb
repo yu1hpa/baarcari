@@ -1,0 +1,31 @@
+<div class="main_wrapper">
+  <div>
+    <ul>
+      <li><a href="/">ホーム</a></li>
+      <li><a href="/application-status">応募状況</a></li>
+      <li><a href="/exobjs/new">新規出品</a></li>
+      <li><a href="/exobjs/search">検索</a></li>
+      <li><a href="/users/<%= @uid %>">プロフィール</a></li>
+      <li><a href="/logout">ログアウト</a></li>
+    </ul>
+  </div>
+  <div class="search_wrapper">
+    <div class="search_form-wrapper">
+      <form action="/exobjs/search" method="post">
+        <div class="search_input_wrapper">
+          <div>
+            <input
+              type="text"
+              name="searching_text"
+              maxlength="140"
+              placeholder="キーワード"
+            />
+          </div>
+          <input type="submit" value="検索" />
+        </div>
+      </form>
+    </div>
+    <h2>検索結果</h2>
+    <div class="search_exobj"><%= @searched_result %></div>
+  </div>
+</div>

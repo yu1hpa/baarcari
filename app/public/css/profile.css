@@ -1,0 +1,9 @@
+.profile__wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.profile__container {
+    display: flex;
+    justify-content: center;
+}

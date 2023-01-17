@@ -1,0 +1,46 @@
+.main_wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.main_wrapper ul {
+    padding: 0px;
+}
+
+.main_wrapper ul li{
+    list-style: none;
+    margin-bottom: 16px;
+}
+
+.main_wrapper a {
+    text-decoration: none;
+    color: black;
+}
+
+/* exobj style */
+
+.exobj {
+    margin-bottom: 10px;
+    width: 720px;
+    border: solid 1px black;
+    padding: 8px;
+    word-break: break-word;
+}
+
+.exobj p {
+    margin: 8px;
+}
+
+.exobj span{
+    margin: 8px;
+    margin-right: 16px;
+}
+
+.exobj > .username {
+    font-size: 20px;
+}
+
+.exobj > .date {
+    color: #656565;
+}
+

@@ -1,0 +1,46 @@
+<div class="main_wrapper">
+  <div>
+    <ul>
+      <li><a href="/">ホーム</a></li>
+      <li><a href="/application-status">応募状況</a></li>
+      <li><a href="/exobjs/new">新規出品</a></li>
+      <li><a href="/exobjs/search">検索</a></li>
+      <li><a href="/users/<%= @uid %>">プロフィール</a></li>
+      <li><a href="/logout">ログアウト</a></li>
+    </ul>
+  </div>
+
+  <div class="exobjs_wrapper">
+    <div>
+      <h2>出品物情報</h2>
+      <div><%= @items %></div>
+    </div>
+
+    <div class="exobjs_form-wrapper">
+      <div>
+        <h2>購入者情報</h2>
+        <form action="/exobjs/info/<%= @item_id %>/apply" method="post" onsubmit="return confirmForm('応募')">
+          <div class="exobjs_input_wrapper">
+            <div>
+              <input
+                type="text"
+                name="purchaser_name"
+                maxlength="100"
+                placeholder="氏名"
+                required
+              />
+              <input
+                type="email"
+                name="purchaser_email"
+                maxlength="100"
+                placeholder="メールアドレス"
+                required
+              />
+              <input type="submit" value="確認" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

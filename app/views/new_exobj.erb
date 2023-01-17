@@ -1,0 +1,44 @@
+<div class="main_wrapper">
+  <div>
+    <ul>
+      <li><a href="/">ホーム</a></li>
+      <li><a href="/application-status">応募状況</a></li>
+      <li><a href="/exobjs/new">新規出品</a></li>
+      <li><a href="/exobjs/search">検索</a></li>
+      <li><a href="/users/<%= @uid %>">プロフィール</a></li>
+      <li><a href="/logout">ログアウト</a></li>
+    </ul>
+  </div>
+  <div class="new_exobj__form__wrapper">
+    <form
+      class="new"
+      name="exobj_form" 
+      action="/exobjs/new"
+      method="post"
+      enctype="multipart/form-data"
+      onsubmit="return confirmForm('登録')"
+    >
+      <div class="new_exobj__input__wrapper">
+        <div class="new_exobj_itemname__wrapper">
+          <input type="text" name="item_name" maxlength="100" placeholder="出品名" required />
+        </div>
+        <div class="new_exobj_detail__wrapper">
+          <textarea name="item_info" cols="30" rows="10" maxlength="100" placeholder="詳細" required></textarea>
+        </div>
+        <div class="new_exobj_remarks__wrapper">
+          <textarea type="text" name="remarks" maxlength="50" placeholder="備考"></textarea>
+        </div>
+        <div>
+          <input type="file" name="item_file" >
+        </div>
+        <div>
+          <input type="radio" name="joutosaki" value="hayaimono" checked>早い者勝ち</input>
+          <input type="radio" name="joutosaki" value="lottery">抽選</input>
+          <div>
+          </div>
+        </div>
+        <input type="submit" value="登録" />
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+.new_exobj__form__wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.new_exobj__input__wrapper textarea {
+    border: solid 1px black;
+    padding: 8px;
+    border-radius: 8px;
+    resize: none;
+    font-size: 16px;
+}
+
+.new_exobj__input__wrapper > .new_exobj_detail__wrapper textarea {
+    width: 440px;
+    height: 100px;
+}
+
+.new_exobj__input__wrapper > .new_exobj_remarks__wrapper textarea {
+    width: 440px;
+    height: 40px;
+}
+
+.new_exobj__input__wrapper input[type="text"] {
+    height: 40px;
+    width: 220px;
+}
+
+.new_exobj__input__wrapper input[type="submit"] {
+    width: 80px;
+    padding: 8px;
+}
+
+.new_exobj__input__wrapper > .new_exobj_itemname__wrapper {
+    flex: flex;
+    text-align: left;
+}

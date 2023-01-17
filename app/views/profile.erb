@@ -1,0 +1,22 @@
+<div class="main_wrapper">
+  <div>
+    <ul>
+      <li><a href="/">ホーム</a></li>
+      <li><a href="/application-status">応募状況</a></li>
+      <li><a href="/exobjs/new">新規出品</a></li>
+      <li><a href="/exobjs/search">検索</a></li>
+      <li><a href="/users/<%= @uid %>">プロフィール</a></li>
+      <li><a href="/logout">ログアウト</a></li>
+    </ul>
+  </div>
+
+  <div class="profile__wrapper">
+    <div class="profile__container">
+      <div>
+        <h1><%= @username %></h1>
+        <h2>出品中</h2>
+        <%= @exobj_items %>
+      </div>
+    </div>
+  </div>
+</div>

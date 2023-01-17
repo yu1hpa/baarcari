@@ -1,0 +1,22 @@
+.exobjs_wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.exobjs_input_wrapper {
+    display: flex;
+}
+
+.exobjs_input_wrapper input {
+    height: 42px;
+}
+
+.exobjs_input_wrapper input[type="email"],
+.exobjs_input_wrapper input[type="text"] {
+    width: 640px;
+}
+
+.exobjs_input_wrapper input[type="submit"] {
+    width: 80px;
+    padding: 8px;
+}
