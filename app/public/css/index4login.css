@@ -1,3 +1,28 @@
 .index4login_exobj {
     margin: 0 auto;
 }
+
+.container__pagination {
+    text-align: center;
+}
+
+.pagination-navigation {
+    display: inline-block;
+}
+
+.pagination {
+    display: flex;
+}
+
+.pagination li {
+    padding: 2px;
+    font-size: 18px;
+}
+
+.pagination-block {
+    border: solid 1px #676767;
+}
+
+.pagination-block a {
+    margin: 3px;
+}
