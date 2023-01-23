@@ -408,7 +408,7 @@ class App < Sinatra::Base
   # missed : true
   # not missed : false
   def is_missed_deadline(deadline)
-    if deadline < DateTime.now.to_time
+    if deadline != nil && deadline < DateTime.now.to_time
       return true
     end
     return false
