@@ -32,8 +32,8 @@
           <input type="file" name="item_file" >
         </div>
         <div>
-          <input type="radio" name="joutosaki" value="hayaimono" checked>早い者勝ち</input>
-          <input type="radio" name="joutosaki" value="lottery">抽選</input>
+          <input type="radio" name="joutosaki" value="lottery" checked>抽選</input>
+          <input type="radio" name="joutosaki" value="hayaimono">早い者勝ち</input>
           <div>
           <input type="date" id="deadline" name="deadline">
           </div>
@@ -50,6 +50,6 @@ t[0].addEventListener("click", isChosen);
 t[1].addEventListener("click", isChosen);
 
 function isChosen(){
-  document.getElementById('deadline').disabled = t[0].checked;
+  document.getElementById('deadline').disabled = !t[0].checked;
 }
 </script>
