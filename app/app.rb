@@ -28,6 +28,8 @@ class App < Sinatra::Base
 
   SHOW_BUTTON = true
   NOTSHOW_BUTTON = false
+  # ページネーション最大件数
+  LIMIT = 5
 
   get '/' do
     if session[:user_id] == nil
@@ -35,13 +37,20 @@ class App < Sinatra::Base
       erb :index
     else
       @uid = session[:user_id]
-      @exobj = disp_exobjs()
+
+      # ページネーション
+      begin
+        page = params[:page] == nil ? 0 : params[:page].to_i - 1
+      rescue
+        page = 0
+      end
+
+      @exobj = disp_exobjs_with_page(page)
       if session[:searched_result] != nil
         @searched_result = session[:searched_result]
       else
         @searched_result = ""
       end
-
       erb :index4login
     end
   end
@@ -312,7 +321,37 @@ class App < Sinatra::Base
     end
     return exobj
   end
-  
+
+  # ページネーション
+  def disp_exobjs_with_page(page)
+    exobj = ""
+    begin
+      e = ExhibitionObjs.all
+      all_pages = (e.count.to_f / LIMIT).ceil
+      if page > all_pages
+        redirect '/'
+      else
+        @p = ""
+        @p += "<ul class=\"pagination\">"
+        (1..all_pages).each do |ai|
+          @p += "<li>"
+          @p += "<div class=\"pagination-block\">"
+          @p += "<a href=\"/?page=#{ai}\">#{ai}</a>"
+          @p += "</div>"
+          @p += "</li>"
+        end
+        @p += "</ul>"
+      end
+
+      (e.limit(LIMIT).offset(LIMIT * page)).each do |a|
+        exobj += exhibition_obj_component(a, SHOW_BUTTON)
+      end
+    rescue => e
+      p e
+    end
+    return exobj
+  end
+
   # disp_exobjsのuser_idでフィルタリングした関数
   # ログイン中のユーザーの出品のみ取得
   def disp_exobjs_with_userid(user_id)
