@@ -35,6 +35,7 @@
           <input type="radio" name="joutosaki" value="hayaimono" checked>早い者勝ち</input>
           <input type="radio" name="joutosaki" value="lottery">抽選</input>
           <div>
+          <input type="date" id="deadline" name="deadline">
           </div>
         </div>
         <input type="submit" value="登録" />
@@ -42,3 +43,13 @@
     </form>
   </div>
 </div>
+
+<script>
+t = document.getElementsByName('joutosaki');
+t[0].addEventListener("click", isChosen);
+t[1].addEventListener("click", isChosen);
+
+function isChosen(){
+  document.getElementById('deadline').disabled = t[0].checked;
+}
+</script>

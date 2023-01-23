@@ -177,6 +177,7 @@ class App < Sinatra::Base
         e.remarks = ""
       end
       e.joutosaki = params['joutosaki']
+      e.deadline = params[:deadline]
       e.created_at = saved_time
       e.save
     rescue => e
@@ -354,10 +355,17 @@ class App < Sinatra::Base
     exobj += "<span class=\"username\">#{user["username"]}</span>"
     exobj += "<span class=\"date\">#{extract_yyyyMMdd(r["created_at"])}</span>"
     exobj += "<p>#{r.item_name}</p>"
-    # 応募期限によったりする
-    if is_show_apply_button
-      exobj += "<a href=\"/exobjs/info/#{r["item_id"]}\"><button>応募する</button></a>"
+    exobj += "<p>#{r.deadline}</p>"
+    if !is_missed_deadline(r.deadline)
+      # 応募期限内で、応募ボタンを押せる条件を満たしていれば
+      if is_show_apply_button
+        exobj += "<a href=\"/exobjs/info/#{r["item_id"]}\"><button>応募する</button></a>"
+      end
+    else
+      # 応募期限外
+      exobj += "<button disabled>応募締切</button>"
     end
+
     if is_show_delete_button
       exobj += "<form action=\"/exobjs/#{r["item_id"]}/delete\" method=\"post\" onsubmit=\"return confirmForm('削除')\">"
       exobj += "<input type=\"hidden\" name=\"user_id\" value=\"#{user["user_id"]}\">"
@@ -397,4 +405,12 @@ class App < Sinatra::Base
     return false
   end
 
+  # missed : true
+  # not missed : false
+  def is_missed_deadline(deadline)
+    if deadline < DateTime.now.to_time
+      return true
+    end
+    return false
+  end
 end
