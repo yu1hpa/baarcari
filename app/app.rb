@@ -395,7 +395,7 @@ class App < Sinatra::Base
     exobj += "<span class=\"date\">#{extract_yyyyMMdd(r["created_at"])}</span>"
     exobj += "<p>#{r.item_name}</p>"
     exobj += "<p>#{r.deadline}</p>"
-    if !is_missed_deadline(r.deadline)
+    if !is_missed_deadline(r) || !is_application_closed(r)
       # 応募期限内で、応募ボタンを押せる条件を満たしていれば
       if is_show_apply_button
         exobj += "<a href=\"/exobjs/info/#{r["item_id"]}\"><button>応募する</button></a>"
@@ -446,8 +446,18 @@ class App < Sinatra::Base
 
   # missed : true
   # not missed : false
-  def is_missed_deadline(deadline)
-    if deadline != nil && deadline < DateTime.now.to_time
+  def is_missed_deadline(record)
+    if record.deadline != nil && record.deadline < DateTime.now.to_time
+      Applicant.find_by(exobj_item_id: record.item_id).is_application_closed = "Closed"
+      return true
+    end
+    return false
+  end
+
+  # Closed : true
+  # Open : false
+  def is_application_closed(record)
+    if Applicant.find_by(exobj_item_id: record.item_id).is_application_closed == "Closed"
       return true
     end
     return false
