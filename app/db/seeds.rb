@@ -26,11 +26,11 @@ end
 
 # applicantion_id : 応募ID（ユニーク）
 applicantion = [
-  { applicantion_id: 'aa2c2336-5069-46a9-85c5-96e85d87bf26', user_id: '0a81033d-440d-4f8f-aae2-78df017fd835', purchaser_name: '鈴木 太郎', purchaser_email: 'suzuki@baarcari.dev', exobj_item_id: 'aad13b0f-c93f-4876-9c12-eaf70d488417' },
-  { applicantion_id: 'bd3f61f6-339f-4766-95a7-da66fbbc5077', user_id: '0a81033d-440d-4f8f-aae2-78df017fd835', purchaser_name: '鈴木 太郎', purchaser_email: 'suzuki@baarcari.dev', exobj_item_id: 'bb111149-e900-458d-8283-8403efea40f7' },
-  { applicantion_id: '79292524-2969-4a4d-8c7e-f8a0e03bc033', user_id: '6ad0a142-8b05-4d1b-be4c-9c0a43ab4d1c', purchaser_name: 'diplo', purchaser_email: 'diplo@baarcari.dev', exobj_item_id: 'aad13b0f-c93f-4876-9c12-eaf70d488417' },
-  { applicantion_id: 'd8a1ecb1-5b8f-4b72-b9e7-136dbf56b6af', user_id: '6ad0a142-8b05-4d1b-be4c-9c0a43ab4d1c', purchaser_name: 'diplo', purchaser_email: 'diplo@baarcari.dev', exobj_item_id: '9eaa4ebd-8c53-41f8-8429-660ddb1844fe' },
-  { applicantion_id: 'dfd235c1-d595-4677-8fc7-8dde3e108578', user_id: '8abc6c35-8c46-485b-bfc7-ad668f3d03b2', purchaser_name: 'yu1hpa', purchaser_email: 'yu1hpa@baarcari.dev', exobj_item_id: 'bb111149-e900-458d-8283-8403efea40f7' }
+  { applicantion_id: 'aa2c2336-5069-46a9-85c5-96e85d87bf26', user_id: '0a81033d-440d-4f8f-aae2-78df017fd835', purchaser_name: '鈴木 太郎', purchaser_email: 'suzuki@baarcari.dev', exobj_item_id: 'aad13b0f-c93f-4876-9c12-eaf70d488417', is_application_closed: 'Closed'},
+  { applicantion_id: 'bd3f61f6-339f-4766-95a7-da66fbbc5077', user_id: '0a81033d-440d-4f8f-aae2-78df017fd835', purchaser_name: '鈴木 太郎', purchaser_email: 'suzuki@baarcari.dev', exobj_item_id: 'bb111149-e900-458d-8283-8403efea40f7', is_application_closed: 'Open'},
+  { applicantion_id: '79292524-2969-4a4d-8c7e-f8a0e03bc033', user_id: '6ad0a142-8b05-4d1b-be4c-9c0a43ab4d1c', purchaser_name: 'diplo', purchaser_email: 'diplo@baarcari.dev', exobj_item_id: 'aad13b0f-c93f-4876-9c12-eaf70d488417', is_application_closed: 'Closed' },
+  { applicantion_id: 'd8a1ecb1-5b8f-4b72-b9e7-136dbf56b6af', user_id: '6ad0a142-8b05-4d1b-be4c-9c0a43ab4d1c', purchaser_name: 'diplo', purchaser_email: 'diplo@baarcari.dev', exobj_item_id: '9eaa4ebd-8c53-41f8-8429-660ddb1844fe', is_application_closed: 'Closed' },
+  { applicantion_id: 'dfd235c1-d595-4677-8fc7-8dde3e108578', user_id: '8abc6c35-8c46-485b-bfc7-ad668f3d03b2', purchaser_name: 'yu1hpa', purchaser_email: 'yu1hpa@baarcari.dev', exobj_item_id: 'bb111149-e900-458d-8283-8403efea40f7', is_application_closed: 'Open' }
 ]
 
 applicantion.each do |a|

@@ -17,6 +17,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_14_170843) do
     t.string "purchaser_name"
     t.string "purchaser_email"
     t.string "exobj_item_id"
+    t.string "is_application_closed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
