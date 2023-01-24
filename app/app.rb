@@ -226,6 +226,11 @@ class App < Sinatra::Base
       a.purchaser_name = CGI.escapeHTML(params[:purchaser_name])
       a.purchaser_email = CGI.escapeHTML(params[:purchaser_email])
       a.exobj_item_id = params[:item_id]
+      if ExhibitionObjs.find_by(item_id: params[:item_id]).joutosaki == "hayaimono"
+        a.is_application_closed = "Closed"
+      else
+        a.is_application_closed = "Open"
+      end
       a.save
     rescue => e
       p e
