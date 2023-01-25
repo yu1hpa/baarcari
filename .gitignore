@@ -32,5 +32,6 @@ manifest.yml
 
 *.db
 
-# /public/
-files
+# /public/files
+users/
+!no-image-available.png
