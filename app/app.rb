@@ -151,7 +151,7 @@ class App < Sinatra::Base
       allowed_filename = [".png", ".jpg", ".jpeg"]
       saved_time = Time.now
 
-      exhibition_obj_base_path = "./public/files/#{session[:user_id]}/exobj"
+      exhibition_obj_base_path = "./public/files/users/#{session[:user_id]}/exobj"
       FileUtils.mkdir_p(exhibition_obj_base_path) unless Dir::exist?(exhibition_obj_base_path)
 
       e = ExhibitionObjs.new
@@ -417,6 +417,16 @@ class App < Sinatra::Base
       exobj += "<input type=\"submit\" value=\"削除\">"
       exobj += "</form>"
     end
+
+    # 出品物の画像を表示
+    exhibition_obj_base_path = "/files/users/#{session[:user_id]}/exobj"
+    exobj += "<div class=\"exobj__image\">"
+    if r.item_image_fname == ""
+      exobj += "<img src=\"/files/no-image-available.png\" alt=\"NO IMAGE AVAILABLE\">"
+    else
+      exobj += "<img src=\"#{exhibition_obj_base_path}/#{r.item_image_fname}\" alt=\"uploaded image\">"
+    end
+    exobj += "</div>"
     exobj += "</article>"
     return exobj
   end
