@@ -427,7 +427,7 @@ class App < Sinatra::Base
     exobj += "</div>"
 
     # 出品物の画像を表示
-    exhibition_obj_base_path = "/files/users/#{session[:user_id]}/exobj"
+    exhibition_obj_base_path = "/files/users/#{r.user_id}/exobj"
     exobj += "<div class=\"exobj__image\">"
     if r.item_image_fname == ""
       exobj += "<img src=\"/files/no-image-available.png\" alt=\"NO IMAGE AVAILABLE\">"
