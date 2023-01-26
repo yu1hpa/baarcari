@@ -484,8 +484,9 @@ class App < Sinatra::Base
   # not missed : false
   def is_missed_deadline(record)
     if record.deadline != nil && record.deadline < DateTime.now.to_time
-      a = Applicant.find_by(exobj_item_id: record.item_id)
-      a.is_application_closed = "Closed"
+      if (a = Applicant.find_by(exobj_item_id: record.item_id)) != nil
+        a.is_application_closed = "Closed"
+      end
       return true
     end
     return false
