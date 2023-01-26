@@ -423,7 +423,9 @@ class App < Sinatra::Base
       exobj += "<form action=\"/exobjs/#{r["item_id"]}/delete\" method=\"post\" onsubmit=\"return confirmForm('削除')\">"
       exobj += "<input type=\"hidden\" name=\"user_id\" value=\"#{user["user_id"]}\">"
       exobj += "<input type=\"hidden\" name=\"_method\" value=\"delete\">"
-      exobj += "<input type=\"submit\" value=\"削除\">"
+      exobj += "<div class=\"exobj-delete--input_container\">"
+      exobj += "<input class=\"exobj-delete--input\" type=\"submit\" value=\"削除\">"
+      exobj += "</div>"
       exobj += "</form>"
     end
     exobj += "</div>"
