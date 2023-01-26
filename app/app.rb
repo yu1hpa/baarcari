@@ -412,7 +412,7 @@ class App < Sinatra::Base
     if !is_application_closed(r)
       # 応募期限内で、応募ボタンを押せる条件を満たしていれば
       if is_show_apply_button
-        exobj += "<a href=\"/exobjs/info/#{r["item_id"]}\"><button>応募する</button></a>"
+        exobj += "<a href=\"/exobjs/info/#{r["item_id"]}\"><button class=\"apply-button__button\">応募する</button></a>"
       end
     else
       # 応募期限外
