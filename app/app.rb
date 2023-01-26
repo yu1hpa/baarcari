@@ -396,6 +396,8 @@ class App < Sinatra::Base
 
     user = User.find_by(user_id: r["user_id"])
     exobj = "<article class=\"exobj\">"
+
+    exobj += "<div>"
     exobj += "<span class=\"exobj-name\">#{r["item_name"]}</span>"
     if r["deadline"] != nil
       exobj += "<span class=\"date\">#{extract_yyyyMMdd(r["deadline"])}</span>"
@@ -419,6 +421,7 @@ class App < Sinatra::Base
       exobj += "<input type=\"submit\" value=\"削除\">"
       exobj += "</form>"
     end
+    exobj += "</div>"
 
     # 出品物の画像を表示
     exhibition_obj_base_path = "/files/users/#{session[:user_id]}/exobj"
@@ -429,6 +432,7 @@ class App < Sinatra::Base
       exobj += "<img src=\"#{exhibition_obj_base_path}/#{r.item_image_fname}\" alt=\"uploaded image\">"
     end
     exobj += "</div>"
+
     exobj += "</article>"
     return exobj
   end
