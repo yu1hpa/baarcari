@@ -36,8 +36,8 @@
     margin-right: 16px;
 }
 
-.exobj > .username {
-    font-size: 20px;
+.exobj > .exobj-name {
+    font-size: 22px;
 }
 
 .exobj > .date {
