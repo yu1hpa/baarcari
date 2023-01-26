@@ -113,6 +113,8 @@ class App < Sinatra::Base
         u = User.find_by(user_id: user_id)
         @username = u.username
       end
+      # ページネーションをおこなわないので使用しない
+      # @exobj_items = disp_exobjs_with_page(FILTER_ME)
       @exobj_items = disp_exobjs_with_userid(session[:user_id])
     rescue => e
       p e
