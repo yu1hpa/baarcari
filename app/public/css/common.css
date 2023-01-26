@@ -38,7 +38,7 @@
     margin-right: 16px;
 }
 
-.exobj > .exobj-name {
+.exobj-name {
     font-size: 22px;
 }
 
@@ -46,3 +46,11 @@
     color: #656565;
 }
 
+.user-name {
+    font-size: 24px;
+}
+
+.user-email {
+    font-size: 18px;
+    color: #8b8b8b;
+}
