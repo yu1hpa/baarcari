@@ -26,3 +26,17 @@
 .pagination-block a {
     margin: 3px;
 }
+
+.apply-button__button {
+    border: 0;
+    border-radius: 5px;
+    background: #fff200;
+    color: rgb(0, 0, 0);
+    padding: 2px 16px;
+    font-size: 16px;
+}
+
+.apply-button__button:hover {
+    cursor: pointer;
+    background-color: #fff86a;
+}
