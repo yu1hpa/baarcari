@@ -25,6 +25,8 @@
     border: solid 1px black;
     padding: 8px;
     word-break: break-word;
+    display: flex;
+    justify-content: space-between;
 }
 
 .exobj p {
