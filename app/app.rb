@@ -31,6 +31,9 @@ class App < Sinatra::Base
   # ページネーション最大件数
   LIMIT = 5
 
+  FILTER_ME = "FILTER_ME"
+  FILETER_OTHER = "FILTER_OTHER"
+
   get '/' do
     if session[:user_id] == nil
       @exobj = disp_exobjs()
@@ -45,7 +48,7 @@ class App < Sinatra::Base
         page = 0
       end
 
-      @exobj = disp_exobjs_with_page(page)
+      @exobj = disp_exobjs_with_page(page, FILETER_OTHER)
       if session[:searched_result] != nil
         @searched_result = session[:searched_result]
       else
@@ -328,10 +331,10 @@ class App < Sinatra::Base
   end
 
   # ページネーション
-  def disp_exobjs_with_page(page)
+  def disp_exobjs_with_page(page, which)
     exobj = ""
     begin
-      e = ExhibitionObjs.all
+      e = filter_me_or_other(which, session[:user_id])
       all_pages = (e.count.to_f / LIMIT).ceil
       if page > all_pages
         redirect '/'
@@ -510,5 +513,13 @@ class App < Sinatra::Base
       return true
     end
     return false
+  end
+
+  def filter_me_or_other(which, user_id)
+      if which == FILETER_OTHER
+        return ExhibitionObjs.where.not(user_id: user_id)
+      elsif which == FILTER_ME
+        return ExhibitionObjs.where(user_id: user_id)
+      end
   end
 end
