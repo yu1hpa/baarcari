@@ -7,3 +7,27 @@
     display: flex;
     justify-content: center;
 }
+
+.exobj-delete--input_container {
+    width: 75px;
+}
+
+.exobj-delete--input {
+    width: 100%;
+    font-size: 15px;
+    color: #000;
+    display: inline-block;
+    padding: 2px 5px;
+    text-align: center;
+    background-color: #ff782a;
+    border: 1px solid #ff782a;
+    border-radius: 5px;
+}
+
+.exobj-delete--input:hover {
+    color: #000000;
+    background-color: #fe9456;
+    border: 1px solid #ff782a;
+    border-radius: 5px;
+    cursor: pointer;
+}
