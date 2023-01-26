@@ -396,10 +396,12 @@ class App < Sinatra::Base
 
     user = User.find_by(user_id: r["user_id"])
     exobj = "<article class=\"exobj\">"
-    exobj += "<span class=\"username\">#{user["username"]}</span>"
-    exobj += "<span class=\"date\">#{extract_yyyyMMdd(r["created_at"])}</span>"
-    exobj += "<p>#{r.item_name}</p>"
-    exobj += "<p>#{r.deadline}</p>"
+    exobj += "<span class=\"exobj-name\">#{r["item_name"]}</span>"
+    if r["deadline"] != nil
+      exobj += "<span class=\"date\">#{extract_yyyyMMdd(r["deadline"])}</span>"
+    end
+    exobj += "<p>#{user["username"]}</p>"
+    exobj += "<p>#{extract_yyyyMMdd(r["created_at"])}</p>"
     if !is_application_closed(r)
       # 応募期限内で、応募ボタンを押せる条件を満たしていれば
       if is_show_apply_button
