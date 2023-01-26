@@ -444,10 +444,24 @@ class App < Sinatra::Base
           if eo["item_id"] == r["exobj_item_id"]
             exobj = ExhibitionObjs.find_by(item_id: r["exobj_item_id"])
             s = "<article class=\"exobj\">"
-            s += "<span class=\"username\">#{r["purchaser_name"]}</span>"
-            s += "<span class=\"date\">#{extract_yyyyMMdd(r["created_at"])}</span>"
+            s += "<div>"
+            s += "<span class=\"user-name\">#{r["purchaser_name"]}</span>"
+            s += "<span class=\"user-email\">#{r["purchaser_email"]}</span>"
+            s += "<span>#{extract_yyyyMMdd(r["created_at"])}</span>"
+ 
             s += "<p>#{exobj["item_name"]}"
             s += "<p>#{exobj["item_info"]}"
+            s += "</div>"
+
+            # 出品物の画像を表示
+            exhibition_obj_base_path = "/files/users/#{session[:user_id]}/exobj"
+            s += "<div class=\"exobj__image\">"
+            if exobj.item_image_fname == ""
+              s += "<img src=\"/files/no-image-available.png\" alt=\"NO IMAGE AVAILABLE\">"
+            else
+              s += "<img src=\"#{exhibition_obj_base_path}/#{exobj.item_image_fname}\" alt=\"uploaded image\">"
+            end
+            s += "</div>"
             s += "</article>"
           end
         end
