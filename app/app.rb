@@ -394,6 +394,10 @@ class App < Sinatra::Base
   # r : Exhibition Objs Record(EOR)
   # user : EORのuser_idからuser recordを取得
   def exhibition_obj_component(r, is_show_apply_button)
+    if !session[:user_id]
+      return ""
+    end
+
     if session[:user_id] == r["user_id"]
       is_show_apply_button = NOTSHOW_BUTTON
       is_show_delete_button = SHOW_BUTTON
