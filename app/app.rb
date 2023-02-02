@@ -419,7 +419,8 @@ class App < Sinatra::Base
       exobj += "<button disabled>応募締切</button>"
     end
 
-    if is_show_delete_button
+    # adminであれば削除可能
+    if is_show_delete_button || (User.find_by(user_id: session[:user_id])).is_admin
       exobj += "<form action=\"/exobjs/#{r["item_id"]}/delete\" method=\"post\" onsubmit=\"return confirmForm('削除')\">"
       exobj += "<input type=\"hidden\" name=\"user_id\" value=\"#{user["user_id"]}\">"
       exobj += "<input type=\"hidden\" name=\"_method\" value=\"delete\">"
