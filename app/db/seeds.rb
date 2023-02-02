@@ -2,10 +2,12 @@
 # yu1hpa    (yu1hpa)
 # diplo     (abcd)
 # suzuki    (qwert)
+# admin     (poiuasdf)
 users = [
-  { user_id: '8abc6c35-8c46-485b-bfc7-ad668f3d03b2', username: 'yu1hpa', passwd: 'f32d6fedd58842e63e39f7f6a67ee6712f37d9566e399754d5588908f281c0a8', email: 'yu1hpa@baarcari.dev' },
-  { user_id: '6ad0a142-8b05-4d1b-be4c-9c0a43ab4d1c', username: 'diplo', passwd: '88d4266fd4e6338d13b845fcf289579d209c897823b9217da3e161936f031589', email: 'diplo@baarcari.dev' },
-  { user_id: '0a81033d-440d-4f8f-aae2-78df017fd835', username: 'suzuki', passwd: '9e69e7e29351ad837503c44a5971edebc9b7e6d8601c89c284b1b59bf37afa80', email: 'suzuki@baarcari.dev' }
+  { user_id: '8abc6c35-8c46-485b-bfc7-ad668f3d03b2', username: 'yu1hpa', passwd: 'f32d6fedd58842e63e39f7f6a67ee6712f37d9566e399754d5588908f281c0a8', email: 'yu1hpa@baarcari.dev', is_admin: false },
+  { user_id: '6ad0a142-8b05-4d1b-be4c-9c0a43ab4d1c', username: 'diplo', passwd: '88d4266fd4e6338d13b845fcf289579d209c897823b9217da3e161936f031589', email: 'diplo@baarcari.dev', is_admin: false },
+  { user_id: '0a81033d-440d-4f8f-aae2-78df017fd835', username: 'suzuki', passwd: '9e69e7e29351ad837503c44a5971edebc9b7e6d8601c89c284b1b59bf37afa80', email: 'suzuki@baarcari.dev', is_admin: false },
+  { user_id: '169706da-9f0e-4443-a06a-f89b7ff9c1dc', username: 'admin', passwd: '9f4672ba555fc517f3b37f6b73f910bf86c40959d859b016a57acb0162df83e9', email: 'admin@baarcari.dev', is_admin: true }
 ]
 
 users.each do |u|
