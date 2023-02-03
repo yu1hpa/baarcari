@@ -409,7 +409,7 @@ class App < Sinatra::Base
     # 出品物の画像を表示
     exobj_image = exobj_image_component(r.user_id, r.item_image_fname)
 
-    exobj = <<~HTML
+    return <<~HTML
     <article class="exobj">
       <div>
         #{user_exobj_info}
@@ -419,7 +419,6 @@ class App < Sinatra::Base
       #{exobj_image}
     </article>
     HTML
-    return exobj
   end
 
   # r : Applicant Record
@@ -429,28 +428,27 @@ class App < Sinatra::Base
       return ""
     end
 
-    s = ""
     ExhibitionObjs.where(user_id: session[:user_id]).each do |eo|
-      # item_idが一致しているデータがあるとき
-      if eo.item_id == r.exobj_item_id
-        exobj = ExhibitionObjs.find_by(item_id: r.exobj_item_id)
-        s = <<~HTML
-        <article class="exobj">
-          <div>
-            <span class="user-name">#{r.purchaser_name}</span>
-            <span class="user-email">#{r.purchaser_email}</span>
-            <span>#{extract_yyyyMMdd(r.created_at)}</span>
-            <p>#{exobj.item_name}</p>
-            <p>#{exobj.item_info}</p>
-          </div>
-
-          #{exobj_image_component(session[:user_id], exobj.item_image_fname)}
-        </article>
-        HTML
+      if eo.item_id != r.exobj_item_id
+        return ""
       end
-    end
 
-    return s
+      # item_idが一致しているデータがあるとき
+      exobj = ExhibitionObjs.find_by(item_id: r.exobj_item_id)
+      return <<~HTML
+      <article class="exobj">
+        <div>
+          <span class="user-name">#{r.purchaser_name}</span>
+          <span class="user-email">#{r.purchaser_email}</span>
+          <span>#{extract_yyyyMMdd(r.created_at)}</span>
+          <p>#{exobj.item_name}</p>
+          <p>#{exobj.item_info}</p>
+        </div>
+
+        #{exobj_image_component(session[:user_id], exobj.item_image_fname)}
+      </article>
+      HTML
+    end
   end
 
   def apply_button_component(deadline, item_id)
