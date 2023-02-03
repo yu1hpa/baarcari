@@ -18,4 +18,6 @@
     justify-content: left;
     padding: 10px;
     font: italic 1.2em "Fira Sans",Cursive;
+    color: rgb(255 241 0);
+    text-shadow: 0 3px rgba(0, 0, 0, 0.513);
 }
