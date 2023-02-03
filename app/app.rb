@@ -34,26 +34,24 @@ class App < Sinatra::Base
 
   get '/' do
     if session[:user_id] == nil
-      @exobj = disp_exobjs()
-      erb :index
-    else
-      @uid = session[:user_id]
-
-      # ページネーション
-      begin
-        page = params[:page] == nil ? 0 : params[:page].to_i - 1
-      rescue
-        page = 0
-      end
-
-      @exobj = disp_exobjs_with_page(page, FILETER_OTHER)
-      if session[:searched_result] != nil
-        @searched_result = session[:searched_result]
-      else
-        @searched_result = ""
-      end
-      erb :index4login
+      redirect '/login'
     end
+    @uid = session[:user_id]
+
+    # ページネーション
+    begin
+      page = params[:page] == nil ? 0 : params[:page].to_i - 1
+    rescue
+      page = 0
+    end
+
+    @exobj = disp_exobjs_with_page(page, FILETER_OTHER)
+    if session[:searched_result] != nil
+      @searched_result = session[:searched_result]
+    else
+      @searched_result = ""
+    end
+    erb :index
   end
   
   get '/login' do
