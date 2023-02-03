@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>baarcari</title>
+    <link rel="stylesheet" type="text/css" href="/css/header.css" />
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <link rel="stylesheet" type="text/css" href="/css/login.css" />
     <link rel="stylesheet" type="text/css" href="/css/signup.css" />
@@ -10,11 +11,20 @@
     <link rel="stylesheet" type="text/css" href="/css/exobjs_item.css" />
     <link rel="stylesheet" type="text/css" href="/css/profile.css" />
     <link rel="stylesheet" type="text/css" href="/css/common.css" />
-    <link rel="stylesheet" type="text/css" href="/css/primitive.css" />
   </head>
+  <script src="/js/confirmForm.js"></script>
   <body>
-    <script src="/js/confirmForm.js"></script>
-    <h1>baarcari</h1>
-    <%= yield %>
+  <header>
+    <div class="header_wrapper">
+      <div class="header_container">
+        <div class="header">
+          <h1>baarcari</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+    <main>
+      <%= yield %>
+    </main>
   </body>
 </html>
