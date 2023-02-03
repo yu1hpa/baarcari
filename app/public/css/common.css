@@ -1,6 +1,7 @@
 .main_wrapper {
     display: flex;
     width: 100%;
+    padding: 50px 0px;
 }
 
 .main_wrapper ul {
@@ -77,4 +78,9 @@
 .user-email {
     font-size: 18px;
     color: #8b8b8b;
+}
+
+.title_container {
+    border-bottom: #333 solid;
+    margin-bottom: 10px;
 }
