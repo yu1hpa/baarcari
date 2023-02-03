@@ -36,11 +36,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_14_170843) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "user_id"
-    t.string "username"
-    t.string "passwd"
+    t.string "user_id", null: false
+    t.string "username", null: false
+    t.string "passwd", null: false
     t.string "email"
-    t.boolean "is_admin"
+    t.boolean "is_admin", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
