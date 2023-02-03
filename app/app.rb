@@ -422,6 +422,37 @@ class App < Sinatra::Base
     return exobj
   end
 
+  # r : Applicant Record
+  # 応募状況用のコンポーネント
+  def application_status_component(r)
+    if !session[:user_id]
+      return ""
+    end
+
+    s = ""
+    ExhibitionObjs.where(user_id: session[:user_id]).each do |eo|
+      # item_idが一致しているデータがあるとき
+      if eo.item_id == r.exobj_item_id
+        exobj = ExhibitionObjs.find_by(item_id: r.exobj_item_id)
+        s = <<~HTML
+        <article class="exobj">
+          <div>
+            <span class="user-name">#{r.purchaser_name}</span>
+            <span class="user-email">#{r.purchaser_email}</span>
+            <span>#{extract_yyyyMMdd(r.created_at)}</span>
+            <p>#{exobj.item_name}</p>
+            <p>#{exobj.item_info}</p>
+          </div>
+
+          #{exobj_image_component(session[:user_id], exobj.item_image_fname)}
+        </article>
+        HTML
+      end
+    end
+
+    return s
+  end
+
   def apply_button_component(deadline, item_id)
       if !is_application_closed(deadline, item_id)
       # 応募期限内で、応募ボタンを押せる条件を満たしていれば
@@ -468,37 +499,6 @@ class App < Sinatra::Base
       <img src="#{exhibition_obj_base_path}" alt="#{exhibition_obj_alt}" >
     </div>
     HTML
-  end
-
-  # r : Applicant Record
-  def application_status_component(r)
-        s = ""
-        ExhibitionObjs.where(user_id: session[:user_id]).each do |eo|
-          if eo["item_id"] == r["exobj_item_id"]
-            exobj = ExhibitionObjs.find_by(item_id: r["exobj_item_id"])
-            s = "<article class=\"exobj\">"
-            s += "<div>"
-            s += "<span class=\"user-name\">#{r["purchaser_name"]}</span>"
-            s += "<span class=\"user-email\">#{r["purchaser_email"]}</span>"
-            s += "<span>#{extract_yyyyMMdd(r["created_at"])}</span>"
- 
-            s += "<p>#{exobj["item_name"]}"
-            s += "<p>#{exobj["item_info"]}"
-            s += "</div>"
-
-            # 出品物の画像を表示
-            exhibition_obj_base_path = "/files/users/#{session[:user_id]}/exobj"
-            s += "<div class=\"exobj__image\">"
-            if exobj.item_image_fname == ""
-              s += "<img src=\"/files/no-image-available.png\" alt=\"NO IMAGE AVAILABLE\">"
-            else
-              s += "<img src=\"#{exhibition_obj_base_path}/#{exobj.item_image_fname}\" alt=\"uploaded image\">"
-            end
-            s += "</div>"
-            s += "</article>"
-          end
-        end
-        return s
   end
 
   def extract_yyyyMMdd(ymd)
