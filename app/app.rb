@@ -26,8 +26,6 @@ class App < Sinatra::Base
   enable :sessions
   ActiveRecord.default_timezone = :local
 
-  SHOW_BUTTON = true
-  NOTSHOW_BUTTON = false
   # ページネーション最大件数
   LIMIT = 5
 
@@ -210,7 +208,7 @@ class App < Sinatra::Base
 
     if is_uuid(params[:item_id])
       item = ExhibitionObjs.find_by(item_id: params[:item_id])
-      @items = exhibition_obj_component(item, NOTSHOW_BUTTON)
+      @items = exhibition_obj_component(item)
       @item_id = item.item_id
     end
 
@@ -297,7 +295,7 @@ class App < Sinatra::Base
       s = ExhibitionObjs.where("item_name LIKE ?", "%#{params[:searching_text]}%")
       searched_result = ""
       s.each do |si|
-        searched_result += exhibition_obj_component(si, SHOW_BUTTON)
+        searched_result += exhibition_obj_component(si)
       end
     rescue => e
       p e
@@ -324,7 +322,7 @@ class App < Sinatra::Base
     exobj = ""
     begin
       (ExhibitionObjs.all).each do |a|
-        exobj += exhibition_obj_component(a, SHOW_BUTTON)
+        exobj += exhibition_obj_component(a)
       end
     rescue => e
       p e
@@ -354,7 +352,7 @@ class App < Sinatra::Base
       end
 
       (e.limit(LIMIT).offset(LIMIT * page)).each do |a|
-        exobj += exhibition_obj_component(a, SHOW_BUTTON)
+        exobj += exhibition_obj_component(a)
       end
     rescue => e
       p e
@@ -369,7 +367,7 @@ class App < Sinatra::Base
     begin
       p ExhibitionObjs.where(user_id: user_id)
       (ExhibitionObjs.where(user_id: user_id)).each do |a|
-        exobj += exhibition_obj_component(a, SHOW_BUTTON)
+        exobj += exhibition_obj_component(a)
       end
     rescue => e
       p e
@@ -393,60 +391,83 @@ class App < Sinatra::Base
 
   # r : Exhibition Objs Record(EOR)
   # user : EORのuser_idからuser recordを取得
-  def exhibition_obj_component(r, is_show_apply_button)
+  def exhibition_obj_component(r)
     if !session[:user_id]
       return ""
     end
 
-    if session[:user_id] == r["user_id"]
-      is_show_apply_button = NOTSHOW_BUTTON
-      is_show_delete_button = SHOW_BUTTON
-    end
+    user = User.find_by(user_id: r.user_id)
+    # ユーザーと出品情報を表示
+    user_exobj_info = user_exobj_info_component(r.item_name, r.deadline, user.username, r.created_at)
 
-    user = User.find_by(user_id: r["user_id"])
-    exobj = "<article class=\"exobj\">"
-
-    exobj += "<div>"
-    exobj += "<span class=\"exobj-name\">#{r["item_name"]}</span>"
-    if r["deadline"] != nil
-      exobj += "<span class=\"date\">#{extract_yyyyMMdd(r["deadline"])}</span>"
-    end
-    exobj += "<p>#{user["username"]}</p>"
-    exobj += "<p>#{extract_yyyyMMdd(r["created_at"])}</p>"
-    if !is_application_closed(r)
-      # 応募期限内で、応募ボタンを押せる条件を満たしていれば
-      if is_show_apply_button
-        exobj += "<a href=\"/exobjs/info/#{r["item_id"]}\"><button class=\"apply-button__button\">応募する</button></a>"
-      end
-    else
-      # 応募期限外
-      exobj += "<button disabled>応募締切</button>"
-    end
+    # 応募ボタン
+    apply_button = apply_button_component(r.deadline, r.item_id)
 
     # adminであれば削除可能
-    if is_show_delete_button || (User.find_by(user_id: session[:user_id])).is_admin
-      exobj += "<form action=\"/exobjs/#{r["item_id"]}/delete\" method=\"post\" onsubmit=\"return confirmForm('削除')\">"
-      exobj += "<input type=\"hidden\" name=\"user_id\" value=\"#{user["user_id"]}\">"
-      exobj += "<input type=\"hidden\" name=\"_method\" value=\"delete\">"
-      exobj += "<div class=\"exobj-delete--input_container\">"
-      exobj += "<input class=\"exobj-delete--input\" type=\"submit\" value=\"削除\">"
-      exobj += "</div>"
-      exobj += "</form>"
-    end
-    exobj += "</div>"
+    delete_button = admin_can_delete_button_component(r.item_id, r.user_id)
 
     # 出品物の画像を表示
-    exhibition_obj_base_path = "/files/users/#{r.user_id}/exobj"
-    exobj += "<div class=\"exobj__image\">"
-    if r.item_image_fname == ""
-      exobj += "<img src=\"/files/no-image-available.png\" alt=\"NO IMAGE AVAILABLE\">"
-    else
-      exobj += "<img src=\"#{exhibition_obj_base_path}/#{r.item_image_fname}\" alt=\"uploaded image\">"
-    end
-    exobj += "</div>"
+    exobj_image = exobj_image_component(r.user_id, r.item_image_fname)
 
-    exobj += "</article>"
+    exobj = <<~HTML
+    <article class="exobj">
+      <div>
+        #{user_exobj_info}
+        #{apply_button}
+        #{delete_button}
+      </div>
+      #{exobj_image}
+    </article>
+    HTML
     return exobj
+  end
+
+  def apply_button_component(deadline, item_id)
+      if !is_application_closed(deadline, item_id)
+      # 応募期限内で、応募ボタンを押せる条件を満たしていれば
+      apply_button = "<a href=\"/exobjs/info/#{item_id}\"><button class=\"apply-button__button\">応募する</button></a>"
+    else
+      # 応募期限外
+      apply_button = "<button disabled>応募締切</button>"
+    end
+  end
+
+  def user_exobj_info_component(item_name, deadline, username, created_at)
+    return <<~HTML
+    <span class="exobj-name">#{item_name}</span>
+    <span class="date">#{extract_yyyyMMdd(deadline)}</span>
+    <p>#{username}</p>
+    <p>#{extract_yyyyMMdd(created_at)}</p>
+    HTML
+  end
+
+  def admin_can_delete_button_component(item_id, user_id)
+    if !(session[:user_id] == user_id) || User.find_by(user_id: session[:user_id]).is_admin
+      return ""
+    end
+    return <<~HTML
+    <form action="/exobjs/#{item_id}/delete" method="post" onsubmit="return confirmForm('削除')">
+      <input type="hidden" name="user_id" value="#{user_id}">
+      <input type="hidden" name="_method" value="delete">
+      <div class="exobj-delete--input_container">
+        <input class="exobj-delete--input" type="submit" value="削除">
+      </div>
+    </form>
+    HTML
+  end
+
+  # 出品物の画像を表示
+  def exobj_image_component(user_id, img_fname)
+    exhibition_obj_base_path = img_fname == "" ? "/files/no-image-available.png"
+                                               : "/files/users/#{user_id}/exobj/#{img_fname}"
+
+    exhibition_obj_alt = img_fname == "" ? "NO IMAGE AVAILABLE"
+                                         : "uploaded image"
+    return <<~HTML
+    <div class="exobj__image">
+      <img src="#{exhibition_obj_base_path}" alt="#{exhibition_obj_alt}" >
+    </div>
+    HTML
   end
 
   # r : Applicant Record
@@ -493,15 +514,15 @@ class App < Sinatra::Base
 
   # Closed : true
   # Open : false
-  def is_application_closed(record)
+  def is_application_closed(deadline, item_id)
     begin
-      a = Applicant.find_by(exobj_item_id: record.item_id)
+      a = Applicant.find_by(exobj_item_id: item_id)
     rescue => e
       p e
     end
 
     # 応募期限を過ぎていたら
-    if is_missed_deadline(record)
+    if is_missed_deadline(deadline, item_id)
       return true
     end
 
@@ -514,9 +535,9 @@ class App < Sinatra::Base
 
   # missed : true
   # not missed : false
-  def is_missed_deadline(record)
-    if record.deadline != nil && record.deadline < DateTime.now.to_time
-      if (a = Applicant.find_by(exobj_item_id: record.item_id)) != nil
+  def is_missed_deadline(deadline, item_id)
+    if deadline != nil && deadline < DateTime.now.to_time
+      if (a = Applicant.find_by(exobj_item_id: item_id)) != nil
         a.is_application_closed = "Closed"
       end
       return true
