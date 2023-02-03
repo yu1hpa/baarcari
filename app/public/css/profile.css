@@ -19,15 +19,15 @@
     display: inline-block;
     padding: 2px 5px;
     text-align: center;
-    background-color: #ff782a;
-    border: 1px solid #ff782a;
+    background-color: #FF8A65;
+    border: 1px solid #FF8A65;
     border-radius: 5px;
 }
 
 .exobj-delete--input:hover {
     color: #000000;
-    background-color: #fe9456;
-    border: 1px solid #ff782a;
+    background-color: #fc987a;
+    border: 1px solid #fc987a;
     border-radius: 5px;
     cursor: pointer;
 }

@@ -16,7 +16,6 @@
 
 .login__input {
   display: flex;
-  width: 400px;
   align-items: center;
   justify-content: center;
   padding: 30px;
