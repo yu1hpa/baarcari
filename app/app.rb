@@ -160,6 +160,8 @@ class App < Sinatra::Base
       redirect '/exobjs/new'
     end
 
+    item_id = ""
+
     begin
       allowed_filename = [".png", ".jpg", ".jpeg"]
       saved_time = Time.now
@@ -190,7 +192,8 @@ class App < Sinatra::Base
         end
       end
       e.user_id = session[:user_id]
-      e.item_id = SecureRandom.uuid
+      item_id = SecureRandom.uuid
+      e.item_id = item_id
       e.item_name = CGI.escapeHTML(params[:item_name])
       e.item_info = CGI.escapeHTML(params[:item_info])
       unless params[:remarks] != nil
@@ -206,7 +209,7 @@ class App < Sinatra::Base
       p e
     end
 
-    redirect '/'
+    redirect "/exobjs/info/#{item_id}"
   end
   
   # ある出品物の詳細情報
@@ -435,7 +438,7 @@ class App < Sinatra::Base
   def fetch_listing_details(r)
     user = User.find_by(user_id: r.user_id)
     # ユーザーと出品情報を表示
-    user_exobj_info = user_exobj_info_component(r.item_name, r.deadline, user.username, r.created_at)
+    user_exobj_info = user_exobj_info_component(r.item_id, r.item_name, r.deadline, user.username, r.created_at)
 
     # 応募ボタン
     apply_button = apply_button_component(r.deadline, r.item_id)
@@ -489,9 +492,9 @@ class App < Sinatra::Base
     end
   end
 
-  def user_exobj_info_component(item_name, deadline, username, created_at)
+  def user_exobj_info_component(item_id, item_name, deadline, username, created_at)
     return <<~HTML
-    <span class="exobj-name">#{item_name}</span>
+    <span class="exobj-name"><a href="/exobjs/info/#{item_id}">#{item_name}</a></span>
     <span class="date">#{extract_yyyyMMdd(deadline)}</span>
     <p>#{username}</p>
     <p>#{extract_yyyyMMdd(created_at)}</p>
