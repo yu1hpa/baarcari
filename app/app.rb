@@ -70,6 +70,11 @@ class App < Sinatra::Base
   end
 
   post '/signup' do
+    if !is_correct_length(params[:username].length, 20) ||
+      !is_correct_length(params[:passwd].length, 20)
+      redirect '/signup'
+    end
+
     a = User.all
     maxid = 0
     a.each do |ai|
@@ -148,6 +153,13 @@ class App < Sinatra::Base
     if session[:user_id] == nil
       redirect '/login'
     end
+
+    if !is_correct_length(params[:item_name].length, 100) ||
+      !is_correct_length(params[:item_info].length, 100) ||
+      !is_correct_length(params[:remarks].length, 50)
+      redirect '/exobjs/new'
+    end
+
     begin
       allowed_filename = [".png", ".jpg", ".jpeg"]
       saved_time = Time.now
@@ -285,7 +297,8 @@ class App < Sinatra::Base
       redirect '/login'
     end
 
-    if params[:searching_text] == ""
+    if params[:searching_text] == "" ||
+      !is_correct_length(params[:searching_text].length, 140)
       redirect '/exobjs/search'
     end
 
@@ -559,5 +572,12 @@ class App < Sinatra::Base
       elsif which == FILTER_ME
         return ExhibitionObjs.where(user_id: user_id)
       end
+  end
+
+  def is_correct_length(input_length, correct_length)
+   if input_length <= correct_length
+      return true
+    end
+    return false
   end
 end
