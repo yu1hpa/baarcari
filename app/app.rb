@@ -390,10 +390,31 @@ class App < Sinatra::Base
   # r : Exhibition Objs Record(EOR)
   # user : EORのuser_idからuser recordを取得
   def exhibition_obj_component(r)
-    if !session[:user_id]
-      return ""
-    end
+   user_exobj_info, apply_button, delete_button, exobj_image = fetch_listing_details(r)
 
+    return render_listing_details(user_exobj_info, apply_button, delete_button, exobj_image)
+  end
+
+  def exhibition_obj_component_without_apply_button(r)
+    user_exobj_info, _, delete_button, exobj_image = fetch_listing_details(r)
+
+    return render_listing_details(user_exobj_info, nil, delete_button, exobj_image)
+  end
+
+  def render_listing_details(user_exobj_info, apply_button, delete_button, exobj_image)
+    return <<~HTML
+    <article class="exobj">
+      <div>
+        #{user_exobj_info}
+        #{apply_button}
+        #{delete_button}
+      </div>
+      #{exobj_image}
+    </article>
+    HTML
+  end
+
+  def fetch_listing_details(r)
     user = User.find_by(user_id: r.user_id)
     # ユーザーと出品情報を表示
     user_exobj_info = user_exobj_info_component(r.item_name, r.deadline, user.username, r.created_at)
@@ -407,16 +428,7 @@ class App < Sinatra::Base
     # 出品物の画像を表示
     exobj_image = exobj_image_component(r.user_id, r.item_image_fname)
 
-    return <<~HTML
-    <article class="exobj">
-      <div>
-        #{user_exobj_info}
-        #{apply_button}
-        #{delete_button}
-      </div>
-      #{exobj_image}
-    </article>
-    HTML
+    return user_exobj_info, apply_button, delete_button, exobj_image
   end
 
   # r : Applicant Record
