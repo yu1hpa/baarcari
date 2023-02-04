@@ -438,7 +438,7 @@ class App < Sinatra::Base
   def fetch_listing_details(r)
     user = User.find_by(user_id: r.user_id)
     # ユーザーと出品情報を表示
-    user_exobj_info = user_exobj_info_component(r.item_id, r.item_name, r.deadline, user.username, r.created_at)
+    user_exobj_info = user_exobj_info_component(r.item_id, r.item_name, r.item_info, r.deadline, user.username, r.created_at)
 
     # 応募ボタン
     apply_button = apply_button_component(r.deadline, r.item_id)
@@ -492,12 +492,19 @@ class App < Sinatra::Base
     end
   end
 
-  def user_exobj_info_component(item_id, item_name, deadline, username, created_at)
+  def user_exobj_info_component(item_id, item_name, item_info, deadline, username, created_at)
     return <<~HTML
-    <span class="exobj-name"><a href="/exobjs/info/#{item_id}">#{item_name}</a></span>
-    <span class="date">#{extract_yyyyMMdd(deadline)}</span>
-    <p>#{username}</p>
-    <p>#{extract_yyyyMMdd(created_at)}</p>
+    <div>
+      <div>
+        <span class="exobj-name"><a href="/exobjs/info/#{item_id}">#{item_name}</a></span>
+        <span class="date">#{extract_yyyyMMdd(deadline)}締切</span>
+        <p>#{item_info}</p>
+      </div>
+      <div>
+        <span>出品者：#{username}</span>
+        <span>(#{extract_yyyyMMdd(created_at)})</span>
+      </div>
+    </div>
     HTML
   end
 
