@@ -523,7 +523,7 @@ class App < Sinatra::Base
   end
 
   def extract_yyyyMMdd(ymd)
-    return ymd.strftime("%Y/%m/%d %H:%M")
+    return ymd != nil ? ymd.strftime("%Y/%m/%d %H:%M") : ""
   end
 
   def is_uuid(uid)
