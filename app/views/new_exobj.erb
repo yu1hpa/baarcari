@@ -5,7 +5,7 @@
       <li><a href="/application-status">応募状況</a></li>
       <li><a href="/exobjs/new">新規出品</a></li>
       <li><a href="/exobjs/search">検索</a></li>
-      <li><a href="/users/<%= @uid %>">プロフィール</a></li>
+      <li><a href="/users/<%= @uid %>">出品管理</a></li>
       <li><a href="/logout">ログアウト</a></li>
     </ul>
   </div>
@@ -35,7 +35,7 @@
           <input type="radio" name="joutosaki" value="lottery" checked>抽選</input>
           <input type="radio" name="joutosaki" value="hayaimono">早い者勝ち</input>
           <div>
-          <input type="datetime-local" id="deadline" name="deadline" required>
+          <input type="date" id="deadline" name="deadline">
           </div>
         </div>
         <input type="submit" value="登録" />

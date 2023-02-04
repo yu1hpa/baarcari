@@ -115,7 +115,7 @@ class App < Sinatra::Base
     rescue => e
       p e
     end
-    erb :profile
+    erb :management
   end
   
   post '/auth' do
