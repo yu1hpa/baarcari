@@ -214,14 +214,19 @@ class App < Sinatra::Base
     if session[:user_id] == nil
       redirect '/login'
     end
-    @uid = session[:user_id]
 
-    if is_uuid(params[:item_id])
-      item = ExhibitionObjs.find_by(item_id: params[:item_id])
-      @items = exhibition_obj_component_without_apply_button(item)
-      @item_id = item.item_id
+    if !is_uuid(params[:item_id])
+      redirect '/'
     end
 
+    @uid = session[:user_id]
+    item = ExhibitionObjs.find_by(item_id: params[:item_id])
+    @items = exhibition_obj_component_without_apply_button(item)
+    @item_id = item.item_id
+
+    if session[:user_id] != item.user_id
+      @purchaser_input_form = purchaser_input_form(params[:item_id])
+    end
     erb :exobjs_item
   end
 
@@ -523,6 +528,37 @@ class App < Sinatra::Base
       <img src="#{exhibition_obj_base_path}" alt="#{exhibition_obj_alt}" >
     </div>
     HTML
+  end
+
+  def purchaser_input_form(item_id)
+  return <<~HTML
+    <div class="exobjs_form-wrapper">
+      <div>
+        <h2>購入者情報</h2>
+        <form action="/exobjs/info/#{item_id}/apply" method="post" onsubmit="return confirmForm('応募')">
+          <div class="exobjs_input_wrapper">
+            <div>
+              <input
+                type="text"
+                name="purchaser_name"
+                maxlength="100"
+                placeholder="氏名"
+                required
+              />
+              <input
+                type="email"
+                name="purchaser_email"
+                maxlength="100"
+                placeholder="メールアドレス"
+                required
+              />
+              <input type="submit" value="確認" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  HTML
   end
 
   def extract_yyyyMMdd(ymd)
