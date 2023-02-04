@@ -206,7 +206,7 @@ class App < Sinatra::Base
 
     if is_uuid(params[:item_id])
       item = ExhibitionObjs.find_by(item_id: params[:item_id])
-      @items = exhibition_obj_component(item)
+      @items = exhibition_obj_component_without_apply_button(item)
       @item_id = item.item_id
     end
 
@@ -293,7 +293,7 @@ class App < Sinatra::Base
       s = ExhibitionObjs.where("item_name LIKE ?", "%#{params[:searching_text]}%")
       searched_result = ""
       s.each do |si|
-        searched_result += exhibition_obj_component(si)
+        searched_result += exhibition_obj_component_without_apply_button(si)
       end
     rescue => e
       p e
@@ -365,7 +365,7 @@ class App < Sinatra::Base
     begin
       p ExhibitionObjs.where(user_id: user_id)
       (ExhibitionObjs.where(user_id: user_id)).each do |a|
-        exobj += exhibition_obj_component(a)
+        exobj += exhibition_obj_component_without_apply_button(a)
       end
     rescue => e
       p e
