@@ -1,0 +1,34 @@
+*:disabled {
+    padding: 3px 8px;
+    background-color: dimgrey;
+    color: linen;
+    opacity: 1;
+    cursor: default;
+}
+
+button {
+    appearance: none;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+input[type=text],
+input[type=email] {
+    border: 1px solid;
+    border-radius: 4px;
+    padding: 4px;
+    margin: 2px;
+}
+
+input[type=submit] {
+    padding: 4px;
+    margin: 2px;
+    border: 1px solid;
+    border-radius: 4px;
+}

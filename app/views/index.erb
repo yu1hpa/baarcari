@@ -1,7 +1,23 @@
-<div class="main">
-    <a href="/login">ログイン画面に戻る</a>
-    <div>
-        <h2>活動報告ログ</h2>
-        <%= @report %>
+<div class="main_wrapper">
+  <div>
+    <ul>
+      <li><a href="/">ホーム</a></li>
+      <li><a href="/application-status">応募状況</a></li>
+      <li><a href="/exobjs/new">新規出品</a></li>
+      <li><a href="/exobjs/search">検索</a></li>
+      <li><a href="/users/<%= @uid %>">プロフィール</a></li>
+      <li><a href="/logout">ログアウト</a></li>
+    </ul>
+  </div>
+  <div class="index4login_exobj">
+    <div class="title_container">
+      <h2>出品一覧</h2>
     </div>
+    <%= @exobj %>
+    <div class="container__pagination">
+      <nav class="pagination-navigation">
+          <%= @p %>
+      </nav>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,23 @@
+.header_wrapper {
+    width: 100%;
+    background-color: #9CCC65;
+    box-shadow: 0 3px rgba(0, 0, 0, 0.108);
+    position: sticky;
+    top: 0;
+}
+
+.header_container {
+    max-width: 1200px;
+    height: 80px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 10px;
+    font: italic 1.2em "Fira Sans",Cursive;
+    color: rgb(255 241 0);
+    text-shadow: 0 3px rgba(0, 0, 0, 0.513);
+}

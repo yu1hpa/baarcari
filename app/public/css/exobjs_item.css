@@ -19,7 +19,14 @@
 .exobjs_input_wrapper input[type="submit"] {
     width: 80px;
     padding: 8px;
+    text-align: center;
+    background-color: #FF8A65;
 }
+
+.exobjs_input_wrapper input[type="submit"]:hover {
+    background-color: #fc987a;
+}
+
 
 .exobj__image {
     width: 150px;

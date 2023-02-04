@@ -23,14 +23,30 @@
     height: 40px;
 }
 
-.new_exobj__input__wrapper input[type="text"] {
+.new_exobj__input__wrapper input[type=text] {
+    border: 1px solid black;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 16px;
     height: 40px;
     width: 220px;
 }
 
-.new_exobj__input__wrapper input[type="submit"] {
-    width: 80px;
-    padding: 8px;
+.new_exobj__input__wrapper input[type=submit] {
+    border-radius: 4px;
+    font-size: 18px;
+    padding: 4px 10px;
+    cursor: pointer;
+    background-color: #FF8A65;
+}
+
+.new_exobj__input__wrapper input[type=submit]:hover {
+    background-color: #fc987a;
+}
+
+.new_exobj__input__wrapper input[type=date] {
+    border: 1px solid;
+    border-radius: 4px;
 }
 
 .new_exobj__input__wrapper > .new_exobj_itemname__wrapper {
