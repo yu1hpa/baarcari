@@ -435,8 +435,8 @@ class App < Sinatra::Base
     # 応募ボタン
     apply_button = apply_button_component(r.deadline, r.item_id)
 
-    # adminであれば削除可能
-    delete_button = admin_can_delete_button_component(r.item_id, r.user_id)
+    # ユーザー自身かAdminであれば削除可能
+    delete_button = delete_button_component(r.item_id, r.user_id)
 
     # 出品物の画像を表示
     exobj_image = exobj_image_component(r.user_id, r.item_image_fname)
@@ -493,10 +493,13 @@ class App < Sinatra::Base
     HTML
   end
 
-  def admin_can_delete_button_component(item_id, user_id)
-    if !(session[:user_id] == user_id) || User.find_by(user_id: session[:user_id]).is_admin
+  def delete_button_component(item_id, user_id)
+    # ユーザー自身でなく、Adminでもない場合
+    if session[:user_id] != user_id && !(User.find_by(user_id: session[:user_id]).is_admin)
       return ""
     end
+
+    # ユーザー自信かAdminである場合
     return <<~HTML
     <form action="/exobjs/#{item_id}/delete" method="post" onsubmit="return confirmForm('削除')">
       <input type="hidden" name="user_id" value="#{user_id}">
