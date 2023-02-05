@@ -493,11 +493,15 @@ class App < Sinatra::Base
   end
 
   def user_exobj_info_component(item_id, item_name, item_info, deadline, username, created_at)
+    p deadline
+    dl = deadline == nil ? "" : "#{extract_yyyyMMdd(deadline)}締切"
+    tag = deadline == nil ? "早いもの勝ち" : "抽選"
     return <<~HTML
     <div>
       <div>
         <span class="exobj-name"><a href="/exobjs/info/#{item_id}">#{item_name}</a></span>
-        <span class="date">#{extract_yyyyMMdd(deadline)}締切</span>
+        <span class="date">#{dl}</span>
+        <span>#{tag}</span>
         <p>#{item_info}</p>
       </div>
       <div>
